@@ -1,0 +1,32 @@
+# config/annotate_models.yml
+# This file contains configuration options for the annotate gem.
+
+# The position of the annotations (before or after the class/module definition)
+position_in_class: 'before'
+
+# Whether to show indexes in the annotation
+show_indexes: true
+
+# Whether to show foreign keys in the annotation
+show_foreign_keys: true
+
+# Whether to show the schema information in the annotation
+show_schema_info: true
+
+# Whether to show the migration version in the annotation
+show_migration: true
+
+# Whether to show the annotated timestamp in the annotation
+show_timestamp: true
+
+# Whether to annotate tests
+annotate_tests: false
+
+# Whether to annotate fixtures
+annotate_fixtures: false
+
+# Whether to annotate factories
+annotate_factories: false
+
+# Whether to annotate serializers
+annotate_serializers: false

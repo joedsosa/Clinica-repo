@@ -1,0 +1,2 @@
+RAILS_ENVIRONMENT=development
+CORS_ORIGINS=http://localhost:3000

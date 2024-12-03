@@ -1,0 +1,1922 @@
+---
+openapi: 3.0.1
+info:
+  title: Clinic API
+  version: v1
+paths:
+  "/api/v1/medical_records":
+    get:
+      summary: list medical records
+      tags:
+      - Medical Records
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: doctor_id
+        in: query
+        description: Filter by doctor's Id
+        schema:
+          type: integer
+      - name: patient_id
+        in: query
+        description: Filter by patient's Id
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/medical_records"
+    post:
+      summary: create medical record
+      tags:
+      - Medical Records
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: medical record created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor_id:
+                  type: integer
+                patient_id:
+                  type: integer
+              required:
+              - doctor_id
+              - patient_id
+              example:
+                doctor_id: 1
+                patient_id: 1
+  "/api/v1/medical_records/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Medical Record ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show medical record
+      tags:
+      - Medical Records
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/medical_record"
+        '404':
+          description: not found
+    put:
+      summary: update medical record
+      tags:
+      - Medical Records
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor_id:
+                  type: integer
+              example:
+                doctor_id: 1
+    delete:
+      summary: delete medical record
+      tags:
+      - Medical Records
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/doctors":
+    get:
+      summary: list doctors
+      tags:
+      - Doctors
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: first_name
+        in: query
+        description: Filter by doctor's first name
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Filter by doctor's last name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/doctors"
+    post:
+      summary: create doctor
+      tags:
+      - Doctors
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: doctor created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                specialty:
+                  type: string
+                start_working_at:
+                  type: string
+                  format: time
+                end_working_at:
+                  type: string
+                  format: time
+              required:
+              - first_name
+              - last_name
+              - specialty
+              - start_working_at
+              - end_working_at
+              example:
+                doctor:
+                  first_name: Ulises
+                  last_name: Largaespada
+                  specialty: Ortopeda
+                  start_working_at: 2000-01-01 05:14:24 UTC
+                  end_working_at: 2000-01-01 13:14:24 UTC
+  "/api/v1/doctors/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Doctor ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show doctor
+      tags:
+      - Doctors
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/doctor"
+        '404':
+          description: not found
+    put:
+      summary: update doctor
+      tags:
+      - Doctors
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+              example:
+                doctor:
+                  first_name: Ulises
+                  last_name: Largaespada
+    delete:
+      summary: delete doctor
+      tags:
+      - Doctors
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/medical_prescriptions":
+    get:
+      summary: list medical prescriptions
+      tags:
+      - Medical Prescriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        medication_name:
+                          type: string
+                        dosage:
+                          type: string
+                        instructions:
+                          type: string
+                        patient_id:
+                          type: integer
+                        doctor_id:
+                          type: integer
+                        start_date:
+                          type: string
+                          format: date
+                        end_date:
+                          type: string
+                          format: date
+    post:
+      summary: create medical prescription
+      tags:
+      - Medical Prescriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: medical prescription created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medication_name:
+                  type: string
+                dosage:
+                  type: string
+                instructions:
+                  type: string
+                patient_id:
+                  type: integer
+              required:
+              - medication_name
+              - dosage
+              - instructions
+              - patient_id
+              example:
+                medical_prescription:
+                  medication_name: Ibuprofen
+                  dosage: 200mg
+                  instructions: Take one tablet after meals
+                  patient_id: 1
+  "/api/v1/medical_prescriptions/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Medical Prescription ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show medical prescription
+      tags:
+      - Medical Prescriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      medication_name:
+                        type: string
+                      dosage:
+                        type: string
+                      instructions:
+                        type: string
+                      patient_id:
+                        type: integer
+                      doctor_id:
+                        type: integer
+                      start_date:
+                        type: string
+                        format: date
+                      end_date:
+                        type: string
+                        format: date
+        '404':
+          description: not found
+    put:
+      summary: update medical prescription
+      tags:
+      - Medical Prescriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medical_prescription:
+                  type: object
+                  properties:
+                    medication_name:
+                      type: string
+                    dosage:
+                      type: string
+                    instructions:
+                      type: string
+              example:
+                medical_prescription:
+                  medication_name: Paracetamol
+                  dosage: 500mg
+                  instructions: Take two tablets daily
+    delete:
+      summary: delete medical prescription
+      tags:
+      - Medical Prescriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/medicines":
+    get:
+      summary: list medicines
+      tags:
+      - Medicines
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Filter by medicine name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/medicines"
+    post:
+      summary: create medicine
+      tags:
+      - Medicines
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: medicine created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                dosage:
+                  type: string
+                dosage_form:
+                  type: string
+                instructions:
+                  type: string
+              required:
+              - name
+              - description
+              - dosage
+              - dosage_form
+              - instructions
+              example:
+                medicine:
+                  name: Paracetamol
+                  description: Pain reliever
+                  dosage: 500mg
+                  dosage_form: Tablet
+                  instructions: Take after meals
+  "/api/v1/medicines/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Medicine ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show medicine
+      tags:
+      - Medicines
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/medicine"
+        '404':
+          description: not found
+    put:
+      summary: update medicine
+      tags:
+      - Medicines
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medicine:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    dosage:
+                      type: string
+                    dosage_form:
+                      type: string
+                    instructions:
+                      type: string
+              example:
+                medicine:
+                  name: Paracetamol
+                  description: Pain reliever
+                  dosage: 500mg
+                  dosage_form: Tablet
+                  instructions: Take after meals
+    delete:
+      summary: delete medicine
+      tags:
+      - Medicines
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/patients":
+    get:
+      summary: list patients
+      tags:
+      - Patients
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: first_name
+        in: query
+        description: Filter by first name
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Filter by patient's last name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/patients"
+    post:
+      summary: create patient
+      tags:
+      - Patients
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: patient created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                blood_type:
+                  type: string
+                emergency_contact_name:
+                  type: string
+                emergency_contact_phone:
+                  type: string
+              required:
+              - first_name
+              - last_name
+              - blood_type
+              - emergency_contact_name
+              - emergency_contact_phone
+              example:
+                patient:
+                  first_name: Alice
+                  last_name: Smith
+                  blood_type: O+
+                  age: 25
+                  birth_date: '1996-01-01'
+                  emergency_contact_name: Bob Smith
+                  emergency_contact_phone: "+50412345678"
+  "/api/v1/patients/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Patient ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show patient
+      tags:
+      - Patients
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/patient"
+        '404':
+          description: not found
+    put:
+      summary: update patient
+      tags:
+      - Patients
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                patient:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+              example:
+                patient:
+                  first_name: Alice
+                  last_name: Jones
+    delete:
+      summary: delete patient
+      tags:
+      - Patients
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/reviews":
+    get:
+      summary: list reviews
+      tags:
+      - Reviews
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: rating
+        in: query
+        description: Filter by rating
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/reviews"
+    post:
+      summary: create review
+      tags:
+      - Reviews
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: review created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                rating:
+                  type: integer
+                title:
+                  type: string
+                description:
+                  type: string
+              required:
+              - email
+              - first_name
+              - last_name
+              - rating
+              - title
+              - description
+              example:
+                review:
+                  email: john.doe@example.com
+                  first_name: John
+                  last_name: Doe
+                  rating: 5
+                  title: Excellent
+                  description: Great experience!
+  "/api/v1/reviews/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Review ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show review
+      tags:
+      - Reviews
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/review"
+        '404':
+          description: not found
+    put:
+      summary: update review
+      tags:
+      - Reviews
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    rating:
+                      type: integer
+              example:
+                review:
+                  first_name: Jane
+                  last_name: Smith
+                  rating: 4
+    delete:
+      summary: delete review
+      tags:
+      - Reviews
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+  "/api/v1/subscriptions":
+    get:
+      summary: list subscriptions
+      tags:
+      - Subscriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Items per page
+        schema:
+          type: integer
+      - name: email
+        in: query
+        description: Filter by email
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subscriptions"
+    post:
+      summary: create subscription
+      tags:
+      - Subscriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: subscription created
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                terms_and_conditions:
+                  type: boolean
+              required:
+              - email
+              - first_name
+              - last_name
+              - terms_and_conditions
+              example:
+                subscription:
+                  email: john.doe@example.com
+                  first_name: John
+                  last_name: Doe
+                  terms_and_conditions: true
+  "/api/v1/subscriptions/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Subscription ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show subscription
+      tags:
+      - Subscriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/subscription"
+        '404':
+          description: not found
+    put:
+      summary: update subscription
+      tags:
+      - Subscriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subscription:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    terms_and_conditions:
+                      type: boolean
+              example:
+                subscription:
+                  first_name: Jane
+                  last_name: Smith
+                  terms_and_conditions: true
+    delete:
+      summary: delete subscription
+      tags:
+      - Subscriptions
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '204':
+          description: no content
+        '404':
+          description: not found
+components:
+  schemas:
+    doctor:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            first_name:
+              type: string
+            last_name:
+              type: string
+            specialty:
+              type: string
+            start_working_at:
+              type: string
+              format: time
+            end_working_at:
+              type: string
+              format: time
+            created_at:
+              type: string
+            updated_at:
+              type: string
+          required:
+          - id
+          - first_name
+          - last_name
+          - specialty
+          - start_working_at
+          - end_working_at
+    doctors:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/doctor"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_doctor:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        specialty:
+          type: string
+        start_working_at:
+          type: string
+          format: time
+        end_working_at:
+          type: string
+          format: time
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - first_name
+      - last_name
+      - specialty
+      - start_working_at
+      - end_working_at
+    patient:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            first_name:
+              type: string
+            last_name:
+              type: string
+            allergies:
+              type: string
+            current_medications:
+              type: string
+            emergency_contact_name:
+              type: string
+            emergency_contact_phone:
+              type: string
+            blood_type:
+              type: string
+            age:
+              type: integer
+            birth_date:
+              type: string
+              format: date
+            created_at:
+              type: string
+            updated_at:
+              type: string
+          required:
+          - id
+          - first_name
+          - last_name
+    patients:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/patient"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_patient:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        allergies:
+          type: string
+        current_medications:
+          type: string
+        emergency_contact_name:
+          type: string
+        emergency_contact_phone:
+          type: string
+        blood_type:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - first_name
+      - last_name
+    medical_record:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            doctor_id:
+              type: integer
+            patient_id:
+              type: integer
+            created_at:
+              type: string
+            updated_at:
+              type: string
+          required:
+          - id
+          - doctor_id
+          - patient_id
+    medical_records:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/medical_record"
+          minItems: 0
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_medical_record:
+      type: object
+      properties:
+        doctor_id:
+          type: integer
+        patient_id:
+          type: integer
+      required:
+      - doctor_id
+      - patient_id
+    review:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            email:
+              type: string
+              format: email
+            first_name:
+              type: string
+            last_name:
+              type: string
+            rating:
+              type: integer
+              minimum: 0
+              maximum: 5
+            title:
+              type: string
+            description:
+              type: string
+            created_at:
+              type: string
+              format: date_time
+            updated_at:
+              type: string
+              format: date_time
+          required:
+          - id
+          - email
+          - first_name
+          - last_name
+          - rating
+          - title
+          - description
+    reviews:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/review"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_review:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        rating:
+          type: integer
+          minimum: 0
+          maximum: 5
+        title:
+          type: string
+        description:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - rating
+      - title
+      - description
+    subscription:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            email:
+              type: string
+              format: email
+            first_name:
+              type: string
+            last_name:
+              type: string
+            terms_and_conditions:
+              type: boolean
+            created_at:
+              type: string
+              format: date_time
+            updated_at:
+              type: string
+              format: date_time
+          required:
+          - id
+          - email
+          - first_name
+          - last_name
+          - terms_and_conditions
+    subscriptions:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/subscription"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_subscription:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        terms_and_conditions:
+          type: boolean
+      required:
+      - email
+      - first_name
+      - last_name
+      - terms_and_conditions
+    medical_record_note:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+            doctor_id:
+              type: integer
+            medical_record_id:
+              type: integer
+            user_id:
+              type: integer
+            created_at:
+              type: string
+              format: date_time
+            updated_at:
+              type: string
+              format: date_time
+          required:
+          - id
+          - description
+          - doctor_id
+          - medical_record_id
+          - user_id
+    medical_record_notes:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/medical_record_note"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_medical_record_note:
+      type: object
+      properties:
+        description:
+          type: string
+        doctor_id:
+          type: integer
+        medical_record_id:
+          type: integer
+        user_id:
+          type: integer
+      required:
+      - description
+      - doctor_id
+      - medical_record_id
+      - user_id
+    medicine:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            dosage:
+              type: string
+            dosage_form:
+              type: string
+            instructions:
+              type: string
+            created_at:
+              type: string
+              format: date_time
+            updated_at:
+              type: string
+              format: date_time
+          required:
+          - name
+          - description
+          - dosage
+          - dosage_form
+          - instructions
+    medicines:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/medicine"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_medicine:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        dosage:
+          type: string
+        instructions:
+          type: string
+        dosage_form:
+          type: string
+      required:
+      - name
+      - description
+      - dosage
+      - dosage_form
+      - instructions
+    diagnosis:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            description:
+              type: string
+            doctor_id:
+              type: integer
+            patient_id:
+              type: integer
+            created_at:
+              type: string
+              format: date_time
+            updated_at:
+              type: string
+              format: date_time
+          required:
+          - description
+          - doctor_id
+          - patient_id
+    diagnoses:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/diagnosis"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_diagnosis:
+      type: object
+      properties:
+        description:
+          type: string
+        doctor_id:
+          type: integer
+        patient_id:
+          type: integer
+      required:
+      - description
+      - doctor_id
+      - patient_id
+    medical_prescription:
+      type: object
+      properties:
+        id:
+          type: integer
+        medication_name:
+          type: string
+        dosage:
+          type: string
+        instructions:
+          type: string
+        patient_id:
+          type: integer
+        doctor_id:
+          type: integer
+        frequency:
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date_time
+        updated_at:
+          type: string
+          format: date_time
+      required:
+      - id
+      - medication_name
+      - dosage
+      - instructions
+      - patient_id
+      - doctor_id
+      - start_date
+      - end_date
+    medical_prescriptions:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/medical_prescription"
+        meta:
+          type: object
+      required:
+      - data
+      - meta
+    new_medical_prescription:
+      type: object
+      properties:
+        medication_name:
+          type: string
+        dosage:
+          type: string
+        instructions:
+          type: string
+        patient_id:
+          type: integer
+        doctor_id:
+          type: integer
+        frequency:
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+      required:
+      - medication_name
+      - dosage
+      - instructions
+      - patient_id
+      - doctor_id
+      - start_date
+      - end_date
